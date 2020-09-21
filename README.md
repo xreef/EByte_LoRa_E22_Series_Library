@@ -1,4 +1,18 @@
-﻿# A complete tutorial on my site www.mischianti.org
+﻿<div>
+<a href="https://www.mischianti.org/forums/forum/mischiantis-libraries/ebyte-lora-e22-uart-devices-sx1262-sx1268//"><img
+  src="https://github.com/xreef/LoRa_E32_Series_Library/raw/master/resources/buttonSupportForumEnglish.png" alt="Support forum EByte e32 English"
+   align="right"></a>
+</div>
+<div>
+<a href="https://www.mischianti.org/it/forums/forum/le-librerie-di-mischianti/ebyte-e22-dispositivi-lora-uart-sx1262-sx1268/"><img
+  src="https://github.com/xreef/LoRa_E32_Series_Library/raw/master/resources/buttonSupportForumItaliano.png" alt="Forum supporto EByte e32 italiano"
+  align="right"></a>
+</div>
+
+#
+#
+#
+# Soon a complete tutorial on my site www.mischianti.org
 
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: settings and basic usage
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: library
@@ -27,7 +41,7 @@ Instruction and assembly video on 6 part of the guide
 
 
 
-# LoRa E22 (EBYTE LoRa SX1278/SX1276) series Library for Arduino, esp8266 and esp32-
+# LoRa E22 (EBYTE LoRa sx1262/sx1268) series Library for Arduino, esp8266 and esp32-
 
 I create a library to manage EBYTE E22 series of LoRa device, very powerfull, simple and cheap device.
 
