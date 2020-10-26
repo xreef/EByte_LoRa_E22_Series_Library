@@ -61,7 +61,7 @@
 #endif
 
 // Uncomment to enable printing out nice debug messages.
-#define LoRa_E22_DEBUG
+//#define LoRa_E22_DEBUG
 
 // Define where debug output will be printed.
 #define DEBUG_PRINTER Serial
