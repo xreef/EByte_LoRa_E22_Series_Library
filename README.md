@@ -14,7 +14,7 @@
 #
 # Soon a complete tutorial on my site www.mischianti.org
 
- - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: settings and basic usage
+ - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: settings and basic usage](https://www.mischianti.org/2020/09/25/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-specs-and-basic-usage-1/)
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: library
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: configuration
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: fixed transmission and RSSI
