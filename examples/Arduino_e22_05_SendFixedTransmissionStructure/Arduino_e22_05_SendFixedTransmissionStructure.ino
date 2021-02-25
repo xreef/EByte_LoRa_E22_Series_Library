@@ -14,12 +14,12 @@
  *
  * https://www.mischianti.org
  *
- * E22		  ----- esp32
- * M0         ----- 19 (or GND)
- * M1         ----- 21 (or GND)
- * RX         ----- TX2 (PullUP)
- * TX         ----- RX2 (PullUP)
- * AUX        ----- 18  (PullUP)
+ * E22		  ----- Arduino
+ * M0         ----- 7 (or GND)
+ * M1         ----- 6 (or GND)
+ * RX         ----- 4 (PullUP)
+ * TX         ----- 5 (PullUP)
+ * AUX        ----- 3  (PullUP)
  * VCC        ----- 3.3v/5v
  * GND        ----- GND
  *

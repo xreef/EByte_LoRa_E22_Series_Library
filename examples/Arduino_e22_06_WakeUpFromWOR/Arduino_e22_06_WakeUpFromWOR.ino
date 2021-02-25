@@ -12,12 +12,12 @@
  *
  * https://www.mischianti.org
  *
- * E22		  ----- WeMos D1 mini
- * M0         ----- D7 (or 3.3v)
- * M1         ----- D6 (or GND)
- * TX         ----- D3 (PullUP)
- * RX         ----- D4 (PullUP)
- * AUX        ----- D5 (PullUP)
+ * E22		  ----- Arduino
+ * M0         ----- 7 (or HIGH)
+ * M1         ----- 6 (or GND)
+ * RX         ----- 4 (PullUP)
+ * TX         ----- 5 (PullUP)
+ * AUX        ----- 3  (PullUP)
  * VCC        ----- 3.3v/5v
  * GND        ----- GND
  *
