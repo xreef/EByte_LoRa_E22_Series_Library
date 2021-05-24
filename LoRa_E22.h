@@ -41,10 +41,10 @@
 #define SOFT_RX_PIN	10
 #define SOFT_TX_PIN 11
 
-#ifndef ESP32
+#if !defined(__STM32F1__) && !defined(ESP32)
 #define ACTIVATE_SOFTWARE_SERIAL
 #endif
-#ifdef ESP32
+#if defined(ESP32)
 #define HARDWARE_SERIAL_SELECTABLE_PIN
 #endif
 

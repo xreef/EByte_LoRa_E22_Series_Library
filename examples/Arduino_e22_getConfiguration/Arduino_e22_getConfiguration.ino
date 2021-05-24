@@ -1,5 +1,5 @@
 /*
- * LoRa E32-TTL-100
+ * EByte LoRa E22
  * Get configuration.
  * https://www.mischianti.org
  *
