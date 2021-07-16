@@ -8,7 +8,7 @@
  * M1         ----- 21 (or 3.3v)
  * RX         ----- TX2 (PullUP)
  * TX         ----- RX2 (PullUP)
- * AUX        ----- 15  (PullUP)
+ * AUX        ----- 18  (PullUP)
  * VCC        ----- 3.3v/5v
  * GND        ----- GND
  *
