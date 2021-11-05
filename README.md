@@ -11,11 +11,21 @@
 
 #
 #
+
+
 #
+#
+
+<div style="background-color: red; color: white; padding: 20px">
+I stop this tutorial and the development of the library for the E220 because EByte prefers not to support these projects.</br>
+If you are interested in these projects write to them expressing your interest: </br>
+Robin Ebyte &lt;sales06@ebyte.com&gt; .
+</div>
+
 # Soon a complete tutorial on my site www.mischianti.org
 
  - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: settings and basic usage](https://www.mischianti.org/2020/09/25/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-specs-and-basic-usage-1/)
- - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: library
+ - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: library](https://www.mischianti.org/2021/01/28/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-library-part-2/)
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: configuration
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: fixed transmission and RSSI
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: power saving and sending structured data
