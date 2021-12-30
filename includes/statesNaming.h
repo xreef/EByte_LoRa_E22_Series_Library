@@ -264,9 +264,9 @@ enum WOR_PERIOD {
 	WOR_1500_010 = B010,
 	WOR_2000_011 = B011,
 	WOR_2500_100 = B100,
-	WOR_3000_000 = B101,
-	WOR_3500_000 = B110,
-	WOR_4000_000 = B111
+	WOR_3000_101 = B101,
+	WOR_3500_110 = B110,
+	WOR_4000_111 = B111
 
 };
 static String getWORPeriodByParams(byte WORPeriod)
@@ -288,13 +288,13 @@ static String getWORPeriodByParams(byte WORPeriod)
 	  case WOR_2500_100:
 			return F("2500ms");
 		break;
-	  case WOR_3000_000:
+	  case WOR_3000_101:
 			return F("3000ms");
 		break;
-	  case WOR_3500_000:
+	  case WOR_3500_110:
 			return F("3500ms");
 		break;
-	  case WOR_4000_000:
+	  case WOR_4000_111:
 			return F("4000ms");
 		break;
 	  default:

@@ -10,17 +10,7 @@
 </div>
 
 #
-#
 
-
-#
-#
-
-<div style="background-color: red; color: white; padding: 20px">
-I stop this tutorial and the development of the library for the E220 because EByte prefers not to support these projects.</br>
-If you are interested in these projects write to them expressing your interest: </br>
-Robin Ebyte &lt;sales06@ebyte.com&gt; .
-</div>
 
 # Soon a complete tutorial on my site www.mischianti.org
 
@@ -34,6 +24,9 @@ Robin Ebyte &lt;sales06@ebyte.com&gt; .
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: WOR microcontroller and WeMos D1 shield
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: WOR microcontroller and esp32 dev v1 shield
 
+
+## Changelog
+- 22/12/2021 1.0.1 Fix on keywork and change DEBUG_PRINTLN on example with Serial And tested Arduino MKR WiFi 1010 and Arduino Nano 33 IoT
 
 # An Arduino UNO shield to simplify the use
 ![Arduino UNO shield](https://www.mischianti.org/wp-content/uploads/2019/12/ArduinoShieldMountedE32LoRa_min.jpg)

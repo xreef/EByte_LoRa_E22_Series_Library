@@ -10,7 +10,8 @@
  *
  * and uncomment #define ENABLE_RSSI true in this sketch
  *
- * https://www.mischianti.org
+ * Renzo Mischianti <https://www.mischianti.org>
+ * https://www.mischianti.org/category/my-libraries/ebyte-lora-e22-devices/
  *
  * E22		  ----- Arduino
  * M0         ----- 7 (or HIGH)

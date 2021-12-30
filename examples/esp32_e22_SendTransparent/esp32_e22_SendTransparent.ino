@@ -8,7 +8,8 @@
  *
  * and uncomment #define ENABLE_RSSI true in this sketch
  *
- * https://www.mischianti.org
+ * Renzo Mischianti <https://www.mischianti.org>
+ * https://www.mischianti.org/category/my-libraries/ebyte-lora-e22-devices/
  *
  * E22		  ----- esp32
  * M0         ----- 19 (or GND)
