@@ -6,6 +6,10 @@
  *
  * Copyright (c) 2019 Renzo Mischianti www.mischianti.org All right reserved.
  *
+ * You may copy, alter and reuse this code in any way you like, but please leave
+ * reference to www.mischianti.org in your comments if you redistribute this code.
+ *
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -234,8 +238,7 @@ bool LoRa_E22::begin(){
         DEBUG_PRINTLN("Begin Hardware Serial");
 
 #ifdef HARDWARE_SERIAL_SELECTABLE_PIN
-        if(this->txE32pin != -1 || this->rxE32pin != -1) {
-        	DEBUG_PRINTLN("PIN SELECTED!!");
+        if(this->txE32pin != -1 && this->rxE32pin != -1) {
 			this->serialDef.begin(*this->hs, this->bpsRate, this->serialConfig, this->txE32pin, this->rxE32pin);
 		}else{
 			this->serialDef.begin(*this->hs, this->bpsRate, this->serialConfig);
@@ -409,6 +412,10 @@ types each handle ints floats differently
 */
 
 Status LoRa_E22::sendStruct(void *structureManaged, uint16_t size_) {
+		if (size_ > MAX_SIZE_TX_PACKET + 2){
+			return ERR_E22_PACKET_TOO_BIG;
+		}
+
 		Status result = SUCCESS;
 
 		uint8_t len = this->serialDef.stream->write((uint8_t *) structureManaged, size_);
@@ -481,7 +488,7 @@ method to set the mode (program, normal, etc.)
 
 */
 
-Status LoRa_E22::setMode(uint8_t mode) {
+Status LoRa_E22::setMode(MODE_TYPE mode) {
 
 	// data sheet claims module needs some extra time after mode setting (2ms)
 	// most of my projects uses 10 ms, but 40ms is safer
@@ -528,7 +535,15 @@ Status LoRa_E22::setMode(uint8_t mode) {
 	// wait until aux pin goes back low
 	Status res = this->waitCompleteResponse(1000);
 
+	if (res == SUCCESS){
+		this->mode = mode;
+	}
+
 	return res;
+}
+
+MODE_TYPE LoRa_E22::getMode(){
+	return this->mode;
 }
 
 void LoRa_E22::writeProgramCommand(PROGRAM_COMMAND cmd, REGISTER_ADDRESS addr, PACKET_LENGHT pl){
@@ -839,7 +854,7 @@ ResponseStatus LoRa_E22::sendFixedMessage(byte ADDH, byte ADDL, byte CHAN, const
 	return this->sendFixedMessage(ADDH, ADDL, CHAN, (uint8_t *)messageFixed, size);
 }
 ResponseStatus LoRa_E22::sendBroadcastFixedMessage(byte CHAN, const String message){
-	return this->sendFixedMessage(0xFF, 0xFF, CHAN, message);
+	return this->sendFixedMessage(BROADCAST_ADDRESS, BROADCAST_ADDRESS, CHAN, message);
 }
 
 typedef struct fixedStransmission
@@ -889,9 +904,10 @@ ResponseStatus LoRa_E22::sendFixedMessage( byte ADDH,byte ADDL, byte CHAN, const
 
 	ResponseStatus status;
 	status.code = this->sendStruct((uint8_t *)fixedStransmission, size+3);
-	if (status.code!=SUCCESS) return status;
 
-//	free(fixedStransmission);
+	free(fixedStransmission);
+
+	if (status.code!=SUCCESS) return status;
 
 	return status;
 }

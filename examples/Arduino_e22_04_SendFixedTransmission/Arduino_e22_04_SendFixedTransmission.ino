@@ -26,9 +26,10 @@
  *
  */
 
-// with this DESTINATION_ADDL 2 you must set
-// FIXED SENDER configuration to the other device and
-// FIXED RECEIVER to this device
+// With FIXED SENDER configuration
+// #define DESTINATION_ADDL 3
+
+// With FIXED RECEIVER configuration
 #define DESTINATION_ADDL 2
 
 // If you want use RSSI uncomment //#define ENABLE_RSSI true
@@ -40,7 +41,7 @@
 
 // ---------- esp8266 pins --------------
 //LoRa_E22 e22ttl(RX, TX, AUX, M0, M1);  // Arduino RX <-- e22 TX, Arduino TX --> e22 RX
-//LoRa_E22 e22ttl(D3, D4, D5, D7, D6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
+// LoRa_E22 e22ttl(D3, D4, D5, D7, D6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
 //LoRa_E22 e22ttl(D2, D3); // Config without connect AUX and M0 M1
 
 //#include <SoftwareSerial.h>
@@ -57,11 +58,20 @@ LoRa_E22 e22ttl(4, 5, 3, 7, 6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX 
 //LoRa_E22 e22ttl(&mySerial, 3, 7, 6); // AUX M0 M1
 // -------------------------------------
 
+// ------------- Arduino Nano 33 IoT -------------
+// LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
+// -------------------------------------------------
+
+// ------------- Arduino MKR WiFi 1010 -------------
+// LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
+// -------------------------------------------------
+
 // ---------- esp32 pins --------------
 //LoRa_E22 e22ttl(&Serial2, 18, 21, 19); //  RX AUX M0 M1
 
 //LoRa_E22 e22ttl(&Serial2, 22, 4, 18, 21, 19, UART_BPS_RATE_9600); //  esp32 RX <-- e22 TX, esp32 TX --> e22 RX AUX M0 M1
 // -------------------------------------
+
 void printParameters(struct Configuration configuration);
 
 void setup() {

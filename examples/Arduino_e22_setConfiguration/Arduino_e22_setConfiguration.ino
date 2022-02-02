@@ -25,8 +25,8 @@
 #define TX D1
 
 // ---------- esp8266 pins --------------
-//LoRa_E22 e22ttl100(RX, TX, AUX, M0, M1);  // Arduino RX <-- e22 TX, Arduino TX --> e22 RX
-//LoRa_E22 e22ttl100(D3, D4, D5, D7, D6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
+//LoRa_E22 e22ttl(RX, TX, AUX, M0, M1);  // Arduino RX <-- e22 TX, Arduino TX --> e22 RX
+// LoRa_E22 e22ttl(D3, D4, D5, D7, D6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
 //LoRa_E22 e22ttl(D2, D3); // Config without connect AUX and M0 M1
 
 //#include <SoftwareSerial.h>
@@ -35,18 +35,26 @@
 // -------------------------------------
 
 // ---------- Arduino pins --------------
-LoRa_E22 e22ttl100(4, 5, 3, 7, 6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
-//LoRa_E22 e22ttl100(4, 5); // Config without connect AUX and M0 M1
+LoRa_E22 e22ttl(4, 5, 3, 7, 6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
+//LoRa_E22 e22ttl(4, 5); // Config without connect AUX and M0 M1
 
 //#include <SoftwareSerial.h>
 //SoftwareSerial mySerial(4, 5); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX
 //LoRa_E22 e22ttl(&mySerial, 3, 7, 6); // AUX M0 M1
 // -------------------------------------
 
-// ---------- esp32 pins --------------
-//LoRa_E22 e22ttl100(&Serial2, 18, 21, 19); //  RX AUX M0 M1
+// ------------- Arduino Nano 33 IoT -------------
+// LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
+// -------------------------------------------------
 
-//LoRa_E22 e22ttl100(&Serial2, 22, 4, 18, 21, 19, UART_BPS_RATE_9600); //  esp32 RX <-- e22 TX, esp32 TX --> e22 RX AUX M0 M1
+// ------------- Arduino MKR WiFi 1010 -------------
+// LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
+// -------------------------------------------------
+
+// ---------- esp32 pins --------------
+//LoRa_E22 e22ttl(&Serial2, 18, 21, 19); //  RX AUX M0 M1
+
+//LoRa_E22 e22ttl(&Serial2, 22, 4, 18, 21, 19, UART_BPS_RATE_9600); //  esp32 RX <-- e22 TX, esp32 TX --> e22 RX AUX M0 M1
 // -------------------------------------
 
 void printParameters(struct Configuration configuration);
@@ -61,10 +69,10 @@ void setup() {
 
 
 	// Startup all pins and UART
-	e22ttl100.begin();
+	e22ttl.begin();
 
 	ResponseStructContainer c;
-	c = e22ttl100.getConfiguration();
+	c = e22ttl.getConfiguration();
 	// It's important get configuration pointer before all other operation
 	Configuration configuration = *(Configuration*) c.data;
 	Serial.println(c.status.getResponseDescription());
@@ -79,248 +87,266 @@ void setup() {
 	configuration.CHAN = 23;
 
 
-	//	----------------------- DEFAULT TRANSPARENT -----------------------
-	//	configuration.ADDL = 0x03;
-	//	configuration.ADDH = 0x00;
-	//	configuration.NETID = 0x00;
-	//
-	//	configuration.CHAN = 23;
-	//
-	//	configuration.SPED.uartBaudRate = UART_BPS_9600;
-	//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-	//	configuration.SPED.uartParity = MODE_00_8N1;
-	//
-	//	configuration.OPTION.subPacketSetting = SPS_240_00;
-	//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-	//	configuration.OPTION.transmissionPower = POWER_22;
-	//
-	//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-	//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_TRANSPARENT_TRANSMISSION;
-	//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-	//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-	//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-	//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//	----------------------- DEFAULT TRANSPARENT WITH RSSI -----------------------
-	//	configuration.ADDL = 0x03;
-	//	configuration.ADDH = 0x00;
-	//	configuration.NETID = 0x00;
-	//
-	//	configuration.CHAN = 23;
-	//
-	//	configuration.SPED.uartBaudRate = UART_BPS_9600;
-	//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-	//	configuration.SPED.uartParity = MODE_00_8N1;
-	//
-	//	configuration.OPTION.subPacketSetting = SPS_240_00;
-	//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-	//	configuration.OPTION.transmissionPower = POWER_22;
-	//
-	//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_ENABLED;
-	//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_TRANSPARENT_TRANSMISSION;
-	//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-	//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-	//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-	//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//	----------------------- FIXED SENDER -----------------------
-//			configuration.ADDL = 0x02;
-//			configuration.ADDH = 0x00;
-//			configuration.NETID = 0x00;
-//
-//			configuration.CHAN = 23;
-//
-//			configuration.SPED.uartBaudRate = UART_BPS_9600;
-//			configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-//			configuration.SPED.uartParity = MODE_00_8N1;
-//
-//			configuration.OPTION.subPacketSetting = SPS_240_00;
-//			configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-//			configuration.OPTION.transmissionPower = POWER_22;
-//
-//			configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-//			configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-//			configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-//			configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-//			configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_TRANSMITTER;
-//			configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//
-	//	----------------------- FIXED RECEIVER -----------------------
-			configuration.ADDL = 0x03;
-			configuration.ADDH = 0x00;
-			configuration.NETID = 0x00;
+//	----------------------- DEFAULT TRANSPARENT -----------------------
+	configuration.ADDL = 0x03;
+	configuration.ADDH = 0x00;
+	configuration.NETID = 0x00;
 
-			configuration.CHAN = 23;
+	configuration.CHAN = 23;
 
-			configuration.SPED.uartBaudRate = UART_BPS_9600;
-			configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-			configuration.SPED.uartParity = MODE_00_8N1;
+	configuration.SPED.uartBaudRate = UART_BPS_9600;
+	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+	configuration.SPED.uartParity = MODE_00_8N1;
 
-			configuration.OPTION.subPacketSetting = SPS_240_00;
-			configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-			configuration.OPTION.transmissionPower = POWER_22;
+	configuration.OPTION.subPacketSetting = SPS_240_00;
+	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+	configuration.OPTION.transmissionPower = POWER_22;
 
-			configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-			configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-			configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-			configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-			configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-			configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//	----------------------- FIXED SENDER RSSI -----------------------
-	//		configuration.ADDL = 0x02;
-	//		configuration.ADDH = 0x00;
-	//		configuration.NETID = 0x00;
-	//
-	//		configuration.CHAN = 23;
-	//
-	//		configuration.SPED.uartBaudRate = UART_BPS_9600;
-	//		configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-	//		configuration.SPED.uartParity = MODE_00_8N1;
-	//
-	//		configuration.OPTION.subPacketSetting = SPS_240_00;
-	//		configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-	//		configuration.OPTION.transmissionPower = POWER_22;
-	//
-	//		configuration.TRANSMISSION_MODE.enableRSSI = RSSI_ENABLED;
-	//		configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-	//		configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-	//		configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-	//		configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_TRANSMITTER;
-	//		configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//
-	//	----------------------- FIXED RECEIVER RSSI -----------------------
-	//		configuration.ADDL = 0x03;
-	//		configuration.ADDH = 0x00;
-	//		configuration.NETID = 0x00;
-	//
-	//		configuration.CHAN = 23;
-	//
-	//		configuration.SPED.uartBaudRate = UART_BPS_9600;
-	//		configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-	//		configuration.SPED.uartParity = MODE_00_8N1;
-	//
-	//		configuration.OPTION.subPacketSetting = SPS_240_00;
-	//		configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-	//		configuration.OPTION.transmissionPower = POWER_22;
-	//
-	//		configuration.TRANSMISSION_MODE.enableRSSI = RSSI_ENABLED;
-	//		configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-	//		configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-	//		configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-	//		configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-	//		configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-
-	//	----------------------- WOR SENDER -----------------------
-	//		configuration.ADDL = 0x02;
-	//		configuration.ADDH = 0x00;
-	//		configuration.NETID = 0x00;
-	//
-	//		configuration.CHAN = 23;
-	//
-	//		configuration.SPED.uartBaudRate = UART_BPS_9600;
-	//		configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-	//		configuration.SPED.uartParity = MODE_00_8N1;
-	//
-	//		configuration.OPTION.subPacketSetting = SPS_240_00;
-	//		configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-	//		configuration.OPTION.transmissionPower = POWER_22;
-	//
-	//		configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-	//		configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-	//		configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-	//		configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-	//		configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_TRANSMITTER;
-	//		configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//
-	//	----------------------- WOR RECEIVER -----------------------
-	//		configuration.ADDL = 0x03;
-	//		configuration.ADDH = 0x00;
-	//		configuration.NETID = 0x00;
-	//
-	//		configuration.CHAN = 23;
-	//
-	//		configuration.SPED.uartBaudRate = UART_BPS_9600;
-	//		configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-	//		configuration.SPED.uartParity = MODE_00_8N1;
-	//
-	//		configuration.OPTION.subPacketSetting = SPS_240_00;
-	//		configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-	//		configuration.OPTION.transmissionPower = POWER_22;
-	//
-	//		configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-	//		configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-	//		configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-	//		configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-	//		configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-	//		configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//	----------------------- BROADCAST MESSAGE 1 -----------------------
-//			configuration.ADDL = 0x04;
-//			configuration.ADDH = 0x00;
-//			configuration.NETID = 0x00;
+	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+	configuration.TRANSMISSION_MODE.fixedTransmission = FT_TRANSPARENT_TRANSMISSION;
+	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- DEFAULT TRANSPARENT WITH RSSI -----------------------
+//	configuration.ADDL = 0x03;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
 //
-//			configuration.CHAN = 23;
+//	configuration.CHAN = 23;
 //
-//			configuration.SPED.uartBaudRate = UART_BPS_9600;
-//			configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-//			configuration.SPED.uartParity = MODE_00_8N1;
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
 //
-//			configuration.OPTION.subPacketSetting = SPS_240_00;
-//			configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-//			configuration.OPTION.transmissionPower = POWER_22;
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
 //
-//			configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-//			configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-//			configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-//			configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-//			configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-//			configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//	----------------------- BROADCAST MESSAGE 2 -----------------------
-//			configuration.ADDL = 0x05;
-//			configuration.ADDH = 0x00;
-//			configuration.NETID = 0x00;
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_ENABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_TRANSPARENT_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- FIXED SENDER -----------------------
+//	configuration.ADDL = 0x02;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
 //
-//			configuration.CHAN = 23;
+//	configuration.CHAN = 23;
 //
-//			configuration.SPED.uartBaudRate = UART_BPS_9600;
-//			configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-//			configuration.SPED.uartParity = MODE_00_8N1;
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
 //
-//			configuration.OPTION.subPacketSetting = SPS_240_00;
-//			configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-//			configuration.OPTION.transmissionPower = POWER_22;
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
 //
-//			configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-//			configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-//			configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-//			configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-//			configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-//			configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
-	//	----------------------- BROADCAST MESSAGE 3 -----------------------
-	//		configuration.ADDL = 0x06;
-	//		configuration.ADDH = 0x00;
-	//		configuration.NETID = 0x00;
-	//
-	//		configuration.CHAN = 23;
-	//
-	//		configuration.SPED.uartBaudRate = UART_BPS_9600;
-	//		configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
-	//		configuration.SPED.uartParity = MODE_00_8N1;
-	//
-	//		configuration.OPTION.subPacketSetting = SPS_240_00;
-	//		configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
-	//		configuration.OPTION.transmissionPower = POWER_22;
-	//
-	//		configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
-	//		configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
-	//		configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
-	//		configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
-	//		configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
-	//		configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_TRANSMITTER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//
+//	----------------------- FIXED RECEIVER -----------------------
+//	configuration.ADDL = 0x03;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- FIXED SENDER RSSI -----------------------
+//	configuration.ADDL = 0x02;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_ENABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_TRANSMITTER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- FIXED RECEIVER RSSI -----------------------
+//	configuration.ADDL = 0x03;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_ENABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- WOR SENDER -----------------------
+//	configuration.ADDL = 0x02;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_TRANSMITTER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- WOR RECEIVER -----------------------
+//	configuration.ADDL = 0x03;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- BROADCAST MESSAGE 1 -----------------------
+//	configuration.ADDL = 0x04;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- BROADCAST MESSAGE 2 -----------------------
+//	configuration.ADDL = 0x05;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- BROADCAST MESSAGE 3 -----------------------
+//	configuration.ADDL = 0x06;
+//	configuration.ADDH = 0x00;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
+//	----------------------- MONITORING MESSAGE -----------------------
+//	configuration.ADDL = 0xFF;
+//	configuration.ADDH = 0xFF;
+//	configuration.NETID = 0x00;
+//
+//	configuration.CHAN = 23;
+//
+//	configuration.SPED.uartBaudRate = UART_BPS_9600;
+//	configuration.SPED.airDataRate = AIR_DATA_RATE_010_24;
+//	configuration.SPED.uartParity = MODE_00_8N1;
+//
+//	configuration.OPTION.subPacketSetting = SPS_240_00;
+//	configuration.OPTION.RSSIAmbientNoise = RSSI_AMBIENT_NOISE_DISABLED;
+//	configuration.OPTION.transmissionPower = POWER_22;
+//
+//	configuration.TRANSMISSION_MODE.enableRSSI = RSSI_DISABLED;
+//	configuration.TRANSMISSION_MODE.fixedTransmission = FT_FIXED_TRANSMISSION;
+//	configuration.TRANSMISSION_MODE.enableRepeater = REPEATER_DISABLED;
+//	configuration.TRANSMISSION_MODE.enableLBT = LBT_DISABLED;
+//	configuration.TRANSMISSION_MODE.WORTransceiverControl = WOR_RECEIVER;
+//	configuration.TRANSMISSION_MODE.WORPeriod = WOR_2000_011;
 
 	// Set configuration changed and set to not hold the configuration
-	ResponseStatus rs = e22ttl100.setConfiguration(configuration, WRITE_CFG_PWR_DWN_SAVE);
+	ResponseStatus rs = e22ttl.setConfiguration(configuration, WRITE_CFG_PWR_DWN_SAVE);
 	Serial.println(rs.getResponseDescription());
 	Serial.println(rs.code);
 
-	c = e22ttl100.getConfiguration();
+	c = e22ttl.getConfiguration();
 	// It's important get configuration pointer before all other operation
 	configuration = *(Configuration*) c.data;
 	Serial.println(c.status.getResponseDescription());

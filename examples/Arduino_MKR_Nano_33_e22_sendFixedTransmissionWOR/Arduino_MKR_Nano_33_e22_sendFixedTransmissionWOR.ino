@@ -57,8 +57,8 @@
 //LoRa_E22 e22ttl(&mySerial, 3, 7, 6); // AUX M0 M1
 // -------------------------------------
 
-// ------------- Arduino MKR WiFi 1010 -------------
-// LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
+// ------------- Arduino Nano 33 IoT -------------
+ LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
 // -------------------------------------------------
 
 // ------------- Arduino MKR WiFi 1010 -------------
@@ -66,7 +66,7 @@
 // -------------------------------------------------
 
 // ---------- esp32 pins --------------
- LoRa_E22 e22ttl(&Serial2, 15, 21, 19); //  RX AUX M0 M1
+// LoRa_E22 e22ttl(&Serial2, 15, 21, 19); //  RX AUX M0 M1
 
 //LoRa_E22 e22ttl(&Serial2, 22, 4, 18, 21, 19, UART_BPS_RATE_9600); //  esp32 RX <-- e220 TX, esp32 TX --> e220 RX AUX M0 M1
 // -------------------------------------
@@ -112,7 +112,7 @@ void loop() {
   }
   if (Serial.available()) {
 	  	String input = Serial.readString();
-		ResponseStatus rsSend = e220ttl.sendFixedMessage(0, DESTINATION_ADDL, 23, "We have received the message!");
+		ResponseStatus rsSend = e22ttl.sendFixedMessage(0, DESTINATION_ADDL, 23, "We have received the message!");
 		// Check If there is some problem of succesfully send
 		Serial.println(rsSend.getResponseDescription());
   }

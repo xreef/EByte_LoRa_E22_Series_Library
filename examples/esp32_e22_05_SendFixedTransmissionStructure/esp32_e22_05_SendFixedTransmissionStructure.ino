@@ -38,8 +38,8 @@
 #include "LoRa_E22.h"
 
 // ---------- esp8266 pins --------------
-//LoRa_E22 e22ttl100(RX, TX, AUX, M0, M1);  // Arduino RX <-- e22 TX, Arduino TX --> e22 RX
-//LoRa_E22 e22ttl100(D3, D4, D5, D7, D6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
+//LoRa_E22 e22ttl(RX, TX, AUX, M0, M1);  // Arduino RX <-- e22 TX, Arduino TX --> e22 RX
+// LoRa_E22 e22ttl(D3, D4, D5, D7, D6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
 //LoRa_E22 e22ttl(D2, D3); // Config without connect AUX and M0 M1
 
 //#include <SoftwareSerial.h>
@@ -49,18 +49,27 @@
 
 // ---------- Arduino pins --------------
 //LoRa_E22 e22ttl(4, 5, 3, 7, 6); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX AUX M0 M1
-//LoRa_E22 e22ttl100(4, 5); // Config without connect AUX and M0 M1
+//LoRa_E22 e22ttl(4, 5); // Config without connect AUX and M0 M1
 
 //#include <SoftwareSerial.h>
 //SoftwareSerial mySerial(4, 5); // Arduino RX <-- e22 TX, Arduino TX --> e22 RX
 //LoRa_E22 e22ttl(&mySerial, 3, 7, 6); // AUX M0 M1
 // -------------------------------------
 
-// ---------- esp32 pins --------------
-LoRa_E22 e22ttl100(&Serial2, 18, 21, 19); //  RX AUX M0 M1
+// ------------- Arduino Nano 33 IoT -------------
+// LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
+// -------------------------------------------------
 
-//LoRa_E22 e22ttl100(&Serial2, 22, 4, 18, 21, 19, UART_BPS_RATE_9600); //  esp32 RX <-- e22 TX, esp32 TX --> e22 RX AUX M0 M1
+// ------------- Arduino MKR WiFi 1010 -------------
+// LoRa_E22 e22ttl(&Serial1, 2, 4, 6); //  RX AUX M0 M1
+// -------------------------------------------------
+
+// ---------- esp32 pins --------------
+LoRa_E22 e22ttl(&Serial2, 18, 21, 19); //  RX AUX M0 M1
+
+//LoRa_E22 e22ttl(&Serial2, 22, 4, 18, 21, 19, UART_BPS_RATE_9600); //  esp32 RX <-- e22 TX, esp32 TX --> e22 RX AUX M0 M1
 // -------------------------------------
+
 void printParameters(struct Configuration configuration);
 struct Message {
 	char type[5] = "TEMP";
@@ -73,7 +82,7 @@ void setup() {
   delay(500);
 
   // Startup all pins and UART
-  e22ttl100.begin();
+  e22ttl.begin();
 
   Serial.println("Hi, I'm going to send message!");
 
@@ -86,19 +95,19 @@ void setup() {
 	*(float*)(message.temperature) = 19.2;
 
   // Send message
-  ResponseStatus rs = e22ttl100.sendFixedMessage(0, RECEIVER_ADDL, 23, &message, sizeof(Message));
+  ResponseStatus rs = e22ttl.sendFixedMessage(0, RECEIVER_ADDL, 23, &message, sizeof(Message));
   // Check If there is some problem of succesfully send
   Serial.println(rs.getResponseDescription());
 }
 
 void loop() {
 	// If something available
-  if (e22ttl100.available()>1) {
+  if (e22ttl.available()>1) {
 	  // read the String message
 #ifdef ENABLE_RSSI
-		ResponseStructContainer rsc = e22ttl100.receiveMessageRSSI(sizeof(Message));
+		ResponseStructContainer rsc = e22ttl.receiveMessageRSSI(sizeof(Message));
 #else
-		ResponseStructContainer rsc = e22ttl100.receiveMessage(sizeof(Message));
+		ResponseStructContainer rsc = e22ttl.receiveMessage(sizeof(Message));
 #endif
 
 	// Is something goes wrong print error
@@ -117,7 +126,7 @@ void loop() {
 #endif
 	}
 	ResponseStructContainer c;
-	c = e22ttl100.getConfiguration();
+	c = e22ttl.getConfiguration();
 	// It's important get configuration pointer before all other operation
 	Configuration configuration = *(Configuration*) c.data;
 	Serial.println(c.status.getResponseDescription());
@@ -135,7 +144,7 @@ void loop() {
 
 		*(float*)(message.temperature) = Serial.parseFloat();
 	  // Send message
-	  ResponseStatus rs = e22ttl100.sendFixedMessage(0, RECEIVER_ADDL, 23, &message, sizeof(Message));
+	  ResponseStatus rs = e22ttl.sendFixedMessage(0, RECEIVER_ADDL, 23, &message, sizeof(Message));
 	  // Check If there is some problem of succesfully send
 	  Serial.println(rs.getResponseDescription());
 
