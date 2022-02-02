@@ -905,6 +905,7 @@ ResponseStatus LoRa_E22::sendFixedMessage( byte ADDH,byte ADDL, byte CHAN, const
 	ResponseStatus status;
 	status.code = this->sendStruct((uint8_t *)fixedStransmission, size+3);
 
+	// fix for #8 issue
 	free(fixedStransmission);
 
 	if (status.code!=SUCCESS) return status;
