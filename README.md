@@ -26,7 +26,7 @@
 
 
 ## Changelog
-- 2021-01-24 1.0.2 Memory leack fix and adjustment
+- 2021-01-24 1.0.2 Memory leak fix and adjustment
 - 2021-12-22 1.0.1 Fix on keywork and change DEBUG_PRINTLN on example with Serial And tested Arduino MKR WiFi 1010 and Arduino Nano 33 IoT
 
 # An Arduino UNO shield to simplify the use
