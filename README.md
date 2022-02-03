@@ -30,6 +30,8 @@
 - 2021-01-24 1.0.2 Memory leak fix and adjustment
 - 2021-12-22 1.0.1 Fix on keywork and change DEBUG_PRINTLN on example with Serial And tested Arduino MKR WiFi 1010 and Arduino Nano 33 IoT
 
+https://downloads.arduino.cc/libraries/logs/github.com/xreef/EByte_LoRa_E22_Series_Library/
+
 # An Arduino UNO shield to simplify the use
 ![Arduino UNO shield](https://www.mischianti.org/wp-content/uploads/2019/12/ArduinoShieldMountedE32LoRa_min.jpg)
 
