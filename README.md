@@ -26,8 +26,9 @@
 
 
 ## Changelog
-- 2021-02-03 1.0.3 Fix file example length
-- 2021-01-24 1.0.2 Memory leak fix and adjustment
+- 2022-02-23 1.0.4 Add Arduino NANO 33 BLE support and minor change
+- 2022-02-03 1.0.3 Fix file example length
+- 2022-01-24 1.0.2 Memory leak fix and adjustment
 - 2021-12-22 1.0.1 Fix on keywork and change DEBUG_PRINTLN on example with Serial And tested Arduino MKR WiFi 1010 and Arduino Nano 33 IoT
 
 https://downloads.arduino.cc/libraries/logs/github.com/xreef/EByte_LoRa_E22_Series_Library/

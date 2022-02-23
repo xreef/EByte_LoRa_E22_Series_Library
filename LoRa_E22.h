@@ -2,7 +2,7 @@
  * EBYTE LoRa E22 Series
  *
  * AUTHOR:  Renzo Mischianti
- * VERSION: 1.0.1
+ * VERSION: 1.0.4
  *
  * https://www.mischianti.org
  *
@@ -35,7 +35,7 @@
 #ifndef LoRa_E22_h
 #define LoRa_E22_h
 
-#if !defined(__STM32F1__) && !defined(ESP32) && !defined(ARDUINO_ARCH_SAMD)
+#if !defined(__STM32F1__) && !defined(ESP32) && !defined(ARDUINO_ARCH_SAMD) &&!defined(ARDUINO_ARCH_MBED)
 	#define ACTIVATE_SOFTWARE_SERIAL
 #endif
 #if defined(ESP32)

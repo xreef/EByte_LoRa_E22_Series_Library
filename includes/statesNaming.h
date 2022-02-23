@@ -86,10 +86,10 @@ static String getResponseDescriptionByParams(byte status){
 
 enum UART_PARITY
 {
-  MODE_00_8N1 = B00,
-  MODE_01_8O1 = B01,
-  MODE_10_8E1 = B10,
-  MODE_11_8N1 = B11
+  MODE_00_8N1 = 0b00,
+  MODE_01_8O1 = 0b01,
+  MODE_10_8E1 = 0b10,
+  MODE_11_8N1 = 0b11
 };
 
 static String getUARTParityDescriptionByParams(byte uartParity){
@@ -114,14 +114,14 @@ static String getUARTParityDescriptionByParams(byte uartParity){
 
 enum UART_BPS_TYPE
 {
-  UART_BPS_1200 = B000,
-  UART_BPS_2400 = B001,
-  UART_BPS_4800 = B010,
-  UART_BPS_9600 = B011,
-  UART_BPS_19200 = B100,
-  UART_BPS_38400 = B101,
-  UART_BPS_57600 = B110,
-  UART_BPS_115200 = B111
+  UART_BPS_1200 = 0b000,
+  UART_BPS_2400 = 0b001,
+  UART_BPS_4800 = 0b010,
+  UART_BPS_9600 = 0b011,
+  UART_BPS_19200 = 0b100,
+  UART_BPS_38400 = 0b101,
+  UART_BPS_57600 = 0b110,
+  UART_BPS_115200 = 0b111
 };
 
 enum UART_BPS_RATE
@@ -171,14 +171,14 @@ static String getUARTBaudRateDescriptionByParams(byte uartBaudRate)
 
 enum AIR_DATA_RATE
 {
-  AIR_DATA_RATE_000_03 = B000,
-  AIR_DATA_RATE_001_12 = B001,
-  AIR_DATA_RATE_010_24 = B010,
-  AIR_DATA_RATE_011_48 = B011,
-  AIR_DATA_RATE_100_96 = B100,
-  AIR_DATA_RATE_101_192 = B101,
-  AIR_DATA_RATE_110_384 = B110,
-  AIR_DATA_RATE_111_625 = B111
+  AIR_DATA_RATE_000_03 = 0b000,
+  AIR_DATA_RATE_001_12 = 0b001,
+  AIR_DATA_RATE_010_24 = 0b010,
+  AIR_DATA_RATE_011_48 = 0b011,
+  AIR_DATA_RATE_100_96 = 0b100,
+  AIR_DATA_RATE_101_192 = 0b101,
+  AIR_DATA_RATE_110_384 = 0b110,
+  AIR_DATA_RATE_111_625 = 0b111
 };
 
 
@@ -216,10 +216,10 @@ static String getAirDataRateDescriptionByParams(byte airDataRate)
 }
 
 enum SUB_PACKET_SETTING {
-	SPS_240_00 = B00,
-	SPS_128_01 = B01,
-	SPS_064_10 = B10,
-	SPS_032_11 = B11
+	SPS_240_00 = 0b00,
+	SPS_128_01 = 0b01,
+	SPS_064_10 = 0b10,
+	SPS_032_11 = 0b11
 
 };
 static String getSubPacketSettingByParams(byte subPacketSetting)
@@ -244,8 +244,8 @@ static String getSubPacketSettingByParams(byte subPacketSetting)
 }
 
 enum RSSI_AMBIENT_NOISE_ENABLE {
-	RSSI_AMBIENT_NOISE_ENABLED = B1,
-	RSSI_AMBIENT_NOISE_DISABLED = B0
+	RSSI_AMBIENT_NOISE_ENABLED = 0b1,
+	RSSI_AMBIENT_NOISE_DISABLED = 0b0
 };
 static String getRSSIAmbientNoiseEnableByParams(byte rssiAmbientNoiseEnabled)
 {
@@ -263,14 +263,14 @@ static String getRSSIAmbientNoiseEnableByParams(byte rssiAmbientNoiseEnabled)
 }
 
 enum WOR_PERIOD {
-	WOR_500_000 = B000,
-	WOR_1000_001 = B001,
-	WOR_1500_010 = B010,
-	WOR_2000_011 = B011,
-	WOR_2500_100 = B100,
-	WOR_3000_101 = B101,
-	WOR_3500_110 = B110,
-	WOR_4000_111 = B111
+	WOR_500_000 = 0b000,
+	WOR_1000_001 = 0b001,
+	WOR_1500_010 = 0b010,
+	WOR_2000_011 = 0b011,
+	WOR_2500_100 = 0b100,
+	WOR_3000_101 = 0b101,
+	WOR_3500_110 = 0b110,
+	WOR_4000_111 = 0b111
 
 };
 static String getWORPeriodByParams(byte WORPeriod)
@@ -306,8 +306,8 @@ static String getWORPeriodByParams(byte WORPeriod)
 	}
 }
 enum WOR_TRANSCEIVER_CONTROL {
-	WOR_TRANSMITTER = B1,
-	WOR_RECEIVER = B0
+	WOR_TRANSMITTER = 0b1,
+	WOR_RECEIVER = 0b0
 };
 static String getWORTransceiverControlByParams(byte worTransceiverControl)
 {
@@ -324,8 +324,8 @@ static String getWORTransceiverControlByParams(byte worTransceiverControl)
 	}
 }
 enum LBT_ENABLE_BYTE {
-	LBT_ENABLED = B1,
-	LBT_DISABLED = B0
+	LBT_ENABLED = 0b1,
+	LBT_DISABLED = 0b0
 };
 static String getLBTEnableByteByParams(byte LBTEnableByte)
 {
@@ -342,8 +342,8 @@ static String getLBTEnableByteByParams(byte LBTEnableByte)
 	}
 }
 enum REPEATER_MODE_ENABLE_BYTE {
-	REPEATER_ENABLED = B1,
-	REPEATER_DISABLED = B0
+	REPEATER_ENABLED = 0b1,
+	REPEATER_DISABLED = 0b0
 };
 static String getRepeaterModeEnableByteByParams(byte repeaterEnableByte)
 {
@@ -360,8 +360,8 @@ static String getRepeaterModeEnableByteByParams(byte repeaterEnableByte)
 	}
 }
 enum RSSI_ENABLE_BYTE {
-	RSSI_ENABLED = B1,
-	RSSI_DISABLED = B0
+	RSSI_ENABLED = 0b1,
+	RSSI_DISABLED = 0b0
 };
 static String getRSSIEnableByteByParams(byte RSSIEnableByte)
 {
@@ -380,8 +380,8 @@ static String getRSSIEnableByteByParams(byte RSSIEnableByte)
 
 enum FIDEX_TRANSMISSION
 {
-  FT_TRANSPARENT_TRANSMISSION = B0,
-  FT_FIXED_TRANSMISSION = B1
+  FT_TRANSPARENT_TRANSMISSION = 0b0,
+  FT_FIXED_TRANSMISSION = 0b1
 };
 
 
@@ -403,10 +403,10 @@ static String getFixedTransmissionDescriptionByParams(byte fixedTransmission)
 #ifdef E22_22
 	enum TRANSMISSION_POWER
 	{
-	  POWER_22 = B00,
-	  POWER_17 = B01,
-	  POWER_13 = B10,
-	  POWER_10 = B11
+	  POWER_22 = 0b00,
+	  POWER_17 = 0b01,
+	  POWER_13 = 0b10,
+	  POWER_10 = 0b11
 
 	};
 
@@ -433,10 +433,10 @@ static String getFixedTransmissionDescriptionByParams(byte fixedTransmission)
 #elif defined(E22_30)
 	enum TRANSMISSION_POWER
 	{
-	  POWER_30 = B00,
-	  POWER_27 = B01,
-	  POWER_24 = B10,
-	  POWER_21 = B11
+	  POWER_30 = 0b00,
+	  POWER_27 = 0b01,
+	  POWER_24 = 0b10,
+	  POWER_21 = 0b11
 
 	};
 
@@ -463,10 +463,10 @@ static String getFixedTransmissionDescriptionByParams(byte fixedTransmission)
 #else
 	enum TRANSMISSION_POWER
 	{
-	  POWER_22 = B00,
-	  POWER_17 = B01,
-	  POWER_13 = B10,
-	  POWER_10 = B11
+	  POWER_22 = 0b00,
+	  POWER_17 = 0b01,
+	  POWER_13 = 0b10,
+	  POWER_10 = 0b11
 
 	};
 
