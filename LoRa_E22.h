@@ -2,7 +2,7 @@
  * EBYTE LoRa E22 Series
  *
  * AUTHOR:  Renzo Mischianti
- * VERSION: 1.0.4
+ * VERSION: 1.0.5
  *
  * https://www.mischianti.org
  *
@@ -344,7 +344,7 @@ class LoRa_E22 {
 
 		struct NeedsStream {
 			template<typename T>
-			void begin(T &t, int baud) {
+			void begin(T &t, uint32_t baud) {
 				DEBUG_PRINTLN("Begin ");
 				t.setTimeout(500);
 				t.begin(baud);
@@ -361,7 +361,7 @@ class LoRa_E22 {
 //		  }
 //
 			template< typename T >
-			void begin( T &t, int baud, uint32_t config ) {
+			void begin( T &t, uint32_t baud, uint32_t config ) {
 				DEBUG_PRINTLN("Begin ");
 				t.setTimeout(500);
 				t.begin(baud, config);
@@ -369,7 +369,7 @@ class LoRa_E22 {
 			}
 
 			template< typename T >
-			void begin( T &t, int baud, uint32_t config, int8_t txE32pin, int8_t rxE32pin ) {
+			void begin( T &t, uint32_t baud, uint32_t config, int8_t txE32pin, int8_t rxE32pin ) {
 				DEBUG_PRINTLN("Begin ");
 				t.setTimeout(500);
 				t.begin(baud, config, txE32pin, rxE32pin);

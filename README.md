@@ -26,6 +26,7 @@
 
 
 ## Changelog
+- 2022-03-14 1.0.5 Fix UART baud rate variable limit
 - 2022-02-23 1.0.4 Add Arduino NANO 33 BLE support and minor change
 - 2022-02-03 1.0.3 Fix file example length
 - 2022-01-24 1.0.2 Memory leak fix and adjustment
