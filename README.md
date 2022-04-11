@@ -242,7 +242,7 @@ Serial.println(c.code); // 1 if Success
 The code are
 
 ```cpp
-SUCCESS = 1,
+E22_SUCCESS = 1,
 ERR_E22_UNKNOWN,
 ERR_E22_NOT_SUPPORT,
 ERR_E22_NOT_IMPLEMENT,

@@ -17,7 +17,10 @@
 #define BROADCAST_ADDRESS 0xFF
 
 typedef enum RESPONSE_STATUS {
+#ifndef ARDUINO_ARCH_STM32
   SUCCESS = 1,
+#endif
+  E22_SUCCESS = 1,  
   ERR_E22_UNKNOWN,	/* something shouldn't happened */
   ERR_E22_NOT_SUPPORT,
   ERR_E22_NOT_IMPLEMENT,
@@ -37,7 +40,7 @@ typedef enum RESPONSE_STATUS {
 static String getResponseDescriptionByParams(byte status){
 	switch (status)
 	{
-	  case SUCCESS:
+	  case E22_SUCCESS:
 		return F("Success");
 		break;
 	  case ERR_E22_UNKNOWN:

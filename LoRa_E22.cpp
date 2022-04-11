@@ -273,7 +273,7 @@ bool LoRa_E22::begin(){
 
     this->serialDef.stream->setTimeout(100);
     Status status = setMode(MODE_0_NORMAL);
-    return status==SUCCESS;
+    return status==E22_SUCCESS;
 }
 
 /*
@@ -285,7 +285,7 @@ a timeout is provided to avoid an infinite loop
 
 Status LoRa_E22::waitCompleteResponse(unsigned long timeout, unsigned int waitNoAux) {
 
-	Status result = SUCCESS;
+	Status result = E22_SUCCESS;
 
 	unsigned long t = millis();
 
@@ -416,7 +416,7 @@ Status LoRa_E22::sendStruct(void *structureManaged, uint16_t size_) {
 			return ERR_E22_PACKET_TOO_BIG;
 		}
 
-		Status result = SUCCESS;
+		Status result = E22_SUCCESS;
 
 		uint8_t len = this->serialDef.stream->write((uint8_t *) structureManaged, size_);
 		if (len!=size_){
@@ -430,10 +430,10 @@ Status LoRa_E22::sendStruct(void *structureManaged, uint16_t size_) {
 				result = ERR_E22_DATA_SIZE_NOT_MATCH;
 			}
 		}
-		if (result != SUCCESS) return result;
+		if (result != E22_SUCCESS) return result;
 
 		result = this->waitCompleteResponse(1000);
-		if (result != SUCCESS) return result;
+		if (result != E22_SUCCESS) return result;
 		DEBUG_PRINT(F("Clear buffer..."))
 		this->cleanUARTBuffer();
 
@@ -458,7 +458,7 @@ types each handle ints floats differently
 
 
 Status LoRa_E22::receiveStruct(void *structureManaged, uint16_t size_) {
-	Status result = SUCCESS;
+	Status result = E22_SUCCESS;
 
 	uint8_t len = this->serialDef.stream->readBytes((uint8_t *) structureManaged, size_);
 
@@ -474,10 +474,10 @@ Status LoRa_E22::receiveStruct(void *structureManaged, uint16_t size_) {
 			result = ERR_E22_DATA_SIZE_NOT_MATCH;
 		}
 	}
-	if (result != SUCCESS) return result;
+	if (result != E22_SUCCESS) return result;
 
 	result = this->waitCompleteResponse(1000);
-	if (result != SUCCESS) return result;
+	if (result != E22_SUCCESS) return result;
 
 	return result;
 }
@@ -535,7 +535,7 @@ Status LoRa_E22::setMode(MODE_TYPE mode) {
 	// wait until aux pin goes back low
 	Status res = this->waitCompleteResponse(1000);
 
-	if (res == SUCCESS){
+	if (res == E22_SUCCESS){
 		this->mode = mode;
 	}
 
@@ -559,12 +559,12 @@ ResponseStructContainer LoRa_E22::getConfiguration(){
 	ResponseStructContainer rc;
 
 	rc.status.code = checkUARTConfiguration(MODE_2_PROGRAM);
-	if (rc.status.code!=SUCCESS) return rc;
+	if (rc.status.code!=E22_SUCCESS) return rc;
 
 	MODE_TYPE prevMode = this->mode;
 
 	rc.status.code = this->setMode(MODE_2_PROGRAM);
-	if (rc.status.code!=SUCCESS) return rc;
+	if (rc.status.code!=E22_SUCCESS) return rc;
 
 	this->writeProgramCommand(READ_CONFIGURATION, REG_ADDRESS_CFG, PL_CONFIGURATION);
 
@@ -575,13 +575,13 @@ ResponseStructContainer LoRa_E22::getConfiguration(){
 	 this->printParameters((Configuration *)rc.data);
 #endif
 
-	if (rc.status.code!=SUCCESS) {
+	if (rc.status.code!=E22_SUCCESS) {
 		this->setMode(prevMode);
 		return rc;
 	}
 
 	rc.status.code = this->setMode(prevMode);
-	if (rc.status.code!=SUCCESS) return rc;
+	if (rc.status.code!=E22_SUCCESS) return rc;
 
 	if (WRONG_FORMAT == ((Configuration *)rc.data)->COMMAND){
 		rc.status.code = ERR_E22_WRONG_FORMAT;
@@ -597,19 +597,19 @@ RESPONSE_STATUS LoRa_E22::checkUARTConfiguration(MODE_TYPE mode){
 	if (mode==MODE_2_PROGRAM && this->bpsRate!=UART_BPS_RATE_9600){
 		return ERR_E22_WRONG_UART_CONFIG;
 	}
-	return SUCCESS;
+	return E22_SUCCESS;
 }
 
 ResponseStatus LoRa_E22::setConfiguration(Configuration configuration, PROGRAM_COMMAND saveType){
 	ResponseStatus rc;
 
 	rc.code = checkUARTConfiguration(MODE_2_PROGRAM);
-	if (rc.code!=SUCCESS) return rc;
+	if (rc.code!=E22_SUCCESS) return rc;
 
 	MODE_TYPE prevMode = this->mode;
 
 	rc.code = this->setMode(MODE_2_PROGRAM);
-	if (rc.code!=SUCCESS) return rc;
+	if (rc.code!=E22_SUCCESS) return rc;
 
 //	this->writeProgramCommand(saveType, REG_ADDRESS_CFG);
 
@@ -619,7 +619,7 @@ ResponseStatus LoRa_E22::setConfiguration(Configuration configuration, PROGRAM_C
 	configuration.LENGHT = PL_CONFIGURATION;
 
 	rc.code = this->sendStruct((uint8_t *)&configuration, sizeof(Configuration));
-	if (rc.code!=SUCCESS) {
+	if (rc.code!=E22_SUCCESS) {
 		this->setMode(prevMode);
 		return rc;
 	}
@@ -632,7 +632,7 @@ ResponseStatus LoRa_E22::setConfiguration(Configuration configuration, PROGRAM_C
 
 
 	rc.code = this->setMode(prevMode);
-	if (rc.code!=SUCCESS) return rc;
+	if (rc.code!=E22_SUCCESS) return rc;
 
 	if (WRONG_FORMAT == ((Configuration *)&configuration)->COMMAND){
 		rc.code = ERR_E22_WRONG_FORMAT;
@@ -648,12 +648,12 @@ ResponseStructContainer LoRa_E22::getModuleInformation(){
 	ResponseStructContainer rc;
 
 	rc.status.code = checkUARTConfiguration(MODE_2_PROGRAM);
-	if (rc.status.code!=SUCCESS) return rc;
+	if (rc.status.code!=E22_SUCCESS) return rc;
 
 	MODE_TYPE prevMode = this->mode;
 
 	rc.status.code = this->setMode(MODE_2_PROGRAM);
-	if (rc.status.code!=SUCCESS) return rc;
+	if (rc.status.code!=E22_SUCCESS) return rc;
 
 	this->writeProgramCommand(READ_CONFIGURATION, REG_ADDRESS_PID, PL_PID);
 
@@ -661,13 +661,13 @@ ResponseStructContainer LoRa_E22::getModuleInformation(){
 
 //	struct ModuleInformation *moduleInformation = (ModuleInformation *)malloc(sizeof(ModuleInformation));
 	rc.status.code = this->receiveStruct((uint8_t *)rc.data, sizeof(ModuleInformation));
-	if (rc.status.code!=SUCCESS) {
+	if (rc.status.code!=E22_SUCCESS) {
 		this->setMode(prevMode);
 		return rc;
 	}
 
 	rc.status.code = this->setMode(prevMode);
-	if (rc.status.code!=SUCCESS) return rc;
+	if (rc.status.code!=E22_SUCCESS) return rc;
 
 //	this->printParameters(*configuration);
 
@@ -687,7 +687,7 @@ ResponseStructContainer LoRa_E22::getModuleInformation(){
 	DEBUG_PRINT(F("Status : "));  DEBUG_PRINTLN(rc.status.getResponseDescription());
 	DEBUG_PRINTLN("----------------------------------------");
 
-//	if (rc.status.code!=SUCCESS) return rc;
+//	if (rc.status.code!=E22_SUCCESS) return rc;
 
 //	rc.data = moduleInformation; // malloc(sizeof (moduleInformation));
 
@@ -699,24 +699,24 @@ ResponseStatus LoRa_E22::resetModule(){
 //	ResponseStatus status;
 //
 //	status.code = checkUARTConfiguration(MODE_2_PROGRAM);
-//	if (status.code!=SUCCESS) return status;
+//	if (status.code!=E22_SUCCESS) return status;
 //
 //	MODE_TYPE prevMode = this->mode;
 //
 //	status.code = this->setMode(MODE_2_PROGRAM);
-//	if (status.code!=SUCCESS) return status;
+//	if (status.code!=E22_SUCCESS) return status;
 //
 //	this->writeProgramCommand(WRITE_RESET_MODULE);
 //
 //	status.code = this->waitCompleteResponse(1000);
-//	if (status.code!=SUCCESS)  {
+//	if (status.code!=E22_SUCCESS)  {
 //		this->setMode(prevMode);
 //		return status;
 //	}
 //
 //
 //	status.code = this->setMode(prevMode);
-//	if (status.code!=SUCCESS) return status;
+//	if (status.code!=E22_SUCCESS) return status;
 //
 //	return status;
 	DEBUG_PRINT(F("No information to reset module!"));
@@ -734,7 +734,7 @@ ResponseContainer LoRa_E22::receiveMessageRSSI(){
 
 ResponseContainer LoRa_E22::receiveMessageComplete(bool rssiEnabled){
 	ResponseContainer rc;
-	rc.status.code = SUCCESS;
+	rc.status.code = E22_SUCCESS;
 	String tmpData = this->serialDef.stream->readString();
 
 	if (rssiEnabled){
@@ -744,7 +744,7 @@ ResponseContainer LoRa_E22::receiveMessageComplete(bool rssiEnabled){
 		rc.data = tmpData;
 	}
 	this->cleanUARTBuffer();
-	if (rc.status.code!=SUCCESS) {
+	if (rc.status.code!=E22_SUCCESS) {
 		return rc;
 	}
 
@@ -755,10 +755,10 @@ ResponseContainer LoRa_E22::receiveMessageComplete(bool rssiEnabled){
 
 ResponseContainer LoRa_E22::receiveMessageUntil(char delimiter){
 	ResponseContainer rc;
-	rc.status.code = SUCCESS;
+	rc.status.code = E22_SUCCESS;
 	rc.data = this->serialDef.stream->readStringUntil(delimiter);
 //	this->cleanUARTBuffer();
-	if (rc.status.code!=SUCCESS) {
+	if (rc.status.code!=E22_SUCCESS) {
 		return rc;
 	}
 
@@ -779,7 +779,7 @@ ResponseStructContainer LoRa_E22::receiveMessageComplete(const uint8_t size, boo
 
 	rc.data = malloc(size);
 	rc.status.code = this->receiveStruct((uint8_t *)rc.data, size);
-	if (rc.status.code!=SUCCESS) {
+	if (rc.status.code!=E22_SUCCESS) {
 		return rc;
 	}
 
@@ -797,7 +797,7 @@ ResponseStructContainer LoRa_E22::receiveMessageComplete(const uint8_t size, boo
 ResponseStatus LoRa_E22::sendMessage(const void *message, const uint8_t size){
 	ResponseStatus status;
 	status.code = this->sendStruct((uint8_t *)message, size);
-	if (status.code!=SUCCESS) return status;
+	if (status.code!=E22_SUCCESS) return status;
 
 	return status;
 }
@@ -812,7 +812,7 @@ ResponseStatus LoRa_E22::sendMessage(const String message){
 
 	ResponseStatus status;
 	status.code = this->sendStruct((uint8_t *)&messageFixed, size);
-	if (status.code!=SUCCESS) return status;
+	if (status.code!=E22_SUCCESS) return status;
 
 //	free(messageFixed);
 	return status;
@@ -846,7 +846,7 @@ ResponseStatus LoRa_E22::sendFixedMessage(byte ADDH, byte ADDL, byte CHAN, const
 //
 //	ResponseStatus status;
 //	status.code = this->sendStruct((uint8_t *)&fixedStransmission, sizeof(fixedStransmission));
-//	if (status.code!=SUCCESS) return status;
+//	if (status.code!=E22_SUCCESS) return status;
 //
 //	return status;
 	char messageFixed[size];
@@ -908,7 +908,7 @@ ResponseStatus LoRa_E22::sendFixedMessage( byte ADDH,byte ADDL, byte CHAN, const
 	// fix for #8 issue
 	free(fixedStransmission);
 
-	if (status.code!=SUCCESS) return status;
+	if (status.code!=E22_SUCCESS) return status;
 
 	return status;
 }
@@ -923,7 +923,7 @@ ResponseStatus LoRa_E22::sendConfigurationMessage( byte ADDH,byte ADDL, byte CHA
 	ResponseStatus rc;
 
 //	rc.code = this->setMode(MODE_2_PROGRAM);
-//	if (rc.code!=SUCCESS) return rc;
+//	if (rc.code!=E22_SUCCESS) return rc;
 
 	configuration->COMMAND = programCommand;
 	configuration->STARTING_ADDRESS = REG_ADDRESS_CFG;
@@ -945,7 +945,7 @@ ResponseStatus LoRa_E22::sendConfigurationMessage( byte ADDH,byte ADDL, byte CHA
 //
 //	ResponseStatus status;
 //	status.code = this->sendStruct((uint8_t *)fixedStransmission, sizeof(Configuration)+5);
-//	if (status.code!=SUCCESS) return status;
+//	if (status.code!=E22_SUCCESS) return status;
 
 //	free(fixedStransmission);
 
@@ -958,7 +958,7 @@ ResponseStatus LoRa_E22::sendBroadcastFixedMessage(byte CHAN, const void *messag
 
 ResponseContainer LoRa_E22::receiveInitialMessage(uint8_t size){
 	ResponseContainer rc;
-	rc.status.code = SUCCESS;
+	rc.status.code = E22_SUCCESS;
 	char buff[size];
 	uint8_t len = this->serialDef.stream->readBytes(buff, size);
 	if (len!=size) {
