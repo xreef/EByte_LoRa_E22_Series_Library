@@ -2,7 +2,7 @@
  * EBYTE LoRa E22 Series
  *
  * AUTHOR:  Renzo Mischianti
- * VERSION: 1.0.6
+ * VERSION: 1.0.7
  *
  * https://www.mischianti.org
  *
