@@ -16,16 +16,16 @@
 
  - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: settings and basic usage](https://www.mischianti.org/2020/09/25/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-specs-and-basic-usage-1/)
  - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: library](https://www.mischianti.org/2021/01/28/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-library-part-2/)
- - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: configuration
- - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: fixed transmission and RSSI
- - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: power saving and sending structured data
- - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: repeater mode and remote settings
+ - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: configuration](https://www.mischianti.org/2022/03/29/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-configuration-3/)
+ - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: fixed transmission and RSSI](https://www.mischianti.org/2022/04/04/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-fixed-transmission-broadcast-monitor-and-rssi-4/)
+ - [Ebyte LoRa E22 device for Arduino, esp32 or esp8266: power saving and sending structured data](https://www.mischianti.org/2022/04/10/ebyte-lora-e22-device-for-arduino-esp32-or-esp8266-power-saving-wor-and-structured-data-5/)
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: WOR microcontroller and Arduino shield
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: WOR microcontroller and WeMos D1 shield
  - Ebyte LoRa E22 device for Arduino, esp32 or esp8266: WOR microcontroller and esp32 dev v1 shield
 
 
 ## Changelog
+- 2022-09-19 1.0.8 Fix stm32 rogerclerk library https://github.com/xreef/LoRa_E32_Series_Library/pull/48
 - 2022-03-14 1.0.7 Fix frequencies
 - 2022-03-14 1.0.6 Fix support for STM32
 - 2022-03-14 1.0.5 Fix UART baud rate variable limit
