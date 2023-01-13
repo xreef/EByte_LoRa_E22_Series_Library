@@ -392,7 +392,7 @@ class LoRa_E22 {
 
 		Status sendStruct(void *structureManaged, uint16_t size_);
 		Status receiveStruct(void *structureManaged, uint16_t size_);
-		void writeProgramCommand(PROGRAM_COMMAND cmd, REGISTER_ADDRESS addr, PACKET_LENGHT pl);
+		bool writeProgramCommand(PROGRAM_COMMAND cmd, REGISTER_ADDRESS addr, PACKET_LENGHT pl);
 
 		RESPONSE_STATUS checkUARTConfiguration(MODE_TYPE mode);
 
