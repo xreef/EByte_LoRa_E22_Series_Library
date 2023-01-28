@@ -25,6 +25,7 @@
 
 
 ## Changelog
+- 2023-01-28 1.0.9 Fix UART_PARITY for ESP32 C3 [Forum](https://www.mischianti.org/forums/topic/problems-including-library/)
 - 2022-09-19 1.0.8 Fix stm32 rogerclerk library https://github.com/xreef/LoRa_E32_Series_Library/pull/48
 - 2022-03-14 1.0.7 Fix frequencies
 - 2022-03-14 1.0.6 Fix support for STM32
